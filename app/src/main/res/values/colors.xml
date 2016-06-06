@@ -6,6 +6,6 @@
     <color name="textColorPrimaryDark">#4285F4</color>
     <color name="windowBackground">#FAFAFA</color>
 
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#4285F4</color>
 
 </resources>
