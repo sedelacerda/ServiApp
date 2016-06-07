@@ -5,8 +5,10 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -21,22 +23,23 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -77,16 +80,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
-    private EditText mPasswordView;
+    private TextInputLayout firstNameView;
+    private TextInputLayout lastNameView;
+    private TextInputLayout mobilePhoneView;
+    private TextInputLayout workPhoneView;
+    private TextInputLayout emailView;
+    private TextInputLayout passwordView;
+
+    private AutoCompleteTextView firstNameText;
+    private AutoCompleteTextView lastNameText;
+    private AutoCompleteTextView mobilePhoneText;
+    private AutoCompleteTextView workPhoneText;
+    private AutoCompleteTextView emailText;
+    private EditText passwordText;
+
+    private Button signInButton;
+    private Button signUpButton;
+    private View separatorView;
+    private LoginButton fbLogin;
+
     private View mProgressView;
     private View mLoginFormView;
 
-    private LoginButton fbLogin;
     /* The callback manager for Facebook */
     private CallbackManager mFacebookCallbackManager;
     /* Used to track user logging in/out off Facebook */
     private AccessTokenTracker mFacebookAccessTokenTracker;
+
+    boolean signInMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,11 +119,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.layout_login);
 
         //region Seteamos los componentes del incio de sesion con usuario y contraseña
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+
+        //region Referenciamos los objetos de la UI
+        firstNameView = (TextInputLayout) findViewById(R.id.first_name_view);
+        lastNameView = (TextInputLayout) findViewById(R.id.last_name_view);
+        mobilePhoneView = (TextInputLayout) findViewById(R.id.mobile_phone_view);
+        workPhoneView = (TextInputLayout) findViewById(R.id.work_phone_view);
+        emailView = (TextInputLayout) findViewById(R.id.email_view);
+        passwordView = (TextInputLayout) findViewById(R.id.password_view);
+
+        firstNameText = (AutoCompleteTextView) findViewById(R.id.first_name);
+        lastNameText = (AutoCompleteTextView) findViewById(R.id.last_name);
+        mobilePhoneText = (AutoCompleteTextView) findViewById(R.id.mobile_phone);
+        workPhoneText = (AutoCompleteTextView) findViewById(R.id.work_phone);
+        emailText = (AutoCompleteTextView) findViewById(R.id.email);
+        passwordText = (EditText) findViewById(R.id.password);
+
+        signInButton = (Button) findViewById(R.id.email_sign_in_button);
+        signUpButton = (Button) findViewById(R.id.email_sign_up_button);
+        separatorView = findViewById(R.id.login_separator);
+        fbLogin = (LoginButton) findViewById(R.id.facebook_sign_in_button);
+
+        mLoginFormView = findViewById(R.id.login_form);
+        mProgressView = findViewById(R.id.login_progress);
+        //endregion
+
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        passwordText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
@@ -113,20 +157,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        signInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
             }
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
+        signUpButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setSignUpLayout();
+            }
+        });
+
         //endregion
 
         //region Seteamos el boton para login con facebook
-        fbLogin = (LoginButton) findViewById(R.id.facebook_sign_in_button);
         mFacebookCallbackManager = CallbackManager.Factory.create();
         fbLogin.setReadPermissions(Arrays.asList(
                 "public_profile", "email", "user_birthday", "user_friends"));
@@ -150,12 +197,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                     String email = object.getString("email");
                                     String gender = object.getString("gender");
                                     String birthday = object.getString("birthday"); // 01/31/1980 format
-                                    System.out.println("###################################################################### "+id);
-                                    System.out.println("###################################################################### "+firstName);
-                                    System.out.println("###################################################################### "+lastName);
-                                    System.out.println("###################################################################### "+email);
-                                    System.out.println("###################################################################### "+gender);
-                                    System.out.println("###################################################################### "+birthday);
+                                    System.out.println("###################################################################### " + id);
+                                    System.out.println("###################################################################### " + firstName);
+                                    System.out.println("###################################################################### " + lastName);
+                                    System.out.println("###################################################################### " + email);
+                                    System.out.println("###################################################################### " + gender);
+                                    System.out.println("###################################################################### " + birthday);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -178,7 +225,32 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Log.v("LoginActivity", error.getCause().toString());
             }
         });
-        //endregion
+        //endregion4
+
+        final LinearLayout layoutView = (LinearLayout) findViewById(R.id.login_main_layout);
+
+        layoutView.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        // Layout has happened here.
+                        setSignInLayout();
+                        // Don't forget to remove your listener when you are done with it.
+                        layoutView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    }
+                }
+        );
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        setSignInLayout();
     }
 
     private void populateAutoComplete() {
@@ -197,7 +269,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             return true;
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(emailText, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
                     .setAction(android.R.string.ok, new View.OnClickListener() {
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
@@ -236,31 +308,31 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Reset errors.
-        mEmailView.setError(null);
-        mPasswordView.setError(null);
+        emailText.setError(null);
+        passwordText.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        String email = emailText.getText().toString();
+        String password = passwordText.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
+            passwordText.setError(getString(R.string.error_invalid_password));
+            focusView = passwordText;
             cancel = true;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
+            emailText.setError(getString(R.string.error_field_required));
+            focusView = emailText;
             cancel = true;
         } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
+            emailText.setError(getString(R.string.error_invalid_email));
+            focusView = emailText;
             cancel = true;
         }
 
@@ -374,7 +446,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
-        mEmailView.setAdapter(adapter);
+        emailText.setAdapter(adapter);
     }
 
     /**
@@ -422,8 +494,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
                 finish();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                passwordText.setError(getString(R.string.error_incorrect_password));
+                passwordText.requestFocus();
             }
         }
 
@@ -438,6 +510,77 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void setSignUpLayout(){
+        if(signInMode){
+            Display display = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            int screenWidth = size.x;
+            int screenHeight = size.y;
+
+            float translationPhoneY = 0;
+            float translationY = 0;
+            float translationButtonsY = signInButton.getY() - signUpButton.getY();
+            float translationX = 0;
+            float translationButtonsX = screenWidth;
+
+            long durationY = 500;
+            long durationX = 500;
+
+            firstNameView.animate().translationX(translationX);
+            lastNameView.animate().translationX(translationX);
+            mobilePhoneView.animate().translationY(translationPhoneY);
+            workPhoneView.animate().translationX(translationX);
+            emailView.animate().translationX(translationX);
+            passwordView.animate().translationY(translationY);
+
+            signInButton.animate().translationX(translationButtonsX);
+            signUpButton.animate().translationY(translationButtonsY);
+            separatorView.animate().translationX(translationButtonsX);
+            fbLogin.animate().translationX(translationButtonsX);
+
+            signInMode = false;
+            this.setTitle(R.string.title_activity_signup);
+        }
+    }
+
+    private void setSignInLayout(){
+        if(!signInMode && mobilePhoneView.getY() != firstNameView.getY()){
+            Display display = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+            int screenWidth = size.x;
+            int screenHeight = size.y;
+
+            float translationPhoneY = firstNameView.getY() - mobilePhoneView.getY();
+            float translationY = lastNameView.getY() - passwordView.getY();
+            float translationX = screenWidth;
+            long durationY = 500;
+            long durationX = 500;
+
+            firstNameView.animate().translationX(translationX);
+            lastNameView.animate().translationX(translationX);
+            mobilePhoneView.animate().translationY(translationPhoneY);
+            workPhoneView.animate().translationX(translationX);
+            emailView.animate().translationX(translationX);
+            passwordView.animate().translationY(translationY);
+
+            signInButton.animate().translationX(0).translationY(translationY).setDuration(durationX);
+            signUpButton.animate().translationY(translationY).setDuration(durationY);
+            separatorView.animate().translationX(0).translationY(translationY).setDuration(durationY);
+            fbLogin.animate().translationX(0).translationY(translationY).setDuration(durationY);
+
+            signInMode = true;
+            this.setTitle(R.string.title_activity_login);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(!signInMode)
+            setSignInLayout();
     }
 }
 

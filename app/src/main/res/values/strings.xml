@@ -10,12 +10,18 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_login">Iniciar sesión</string>
+    <string name="title_activity_signup">Registrarse</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="prompt_first_name">Nombre</string>
+    <string name="prompt_last_name">Apellido</string>
+    <string name="prompt_mobile_phone">Teléfono móvil</string>
+    <string name="prompt_work_phone">Teléfono de trabajo (opcional)</string>
+    <string name="prompt_email">Email (opcional)</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Iniciar sesión</string>
+    <string name="action_sign_up">Registrarse</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
