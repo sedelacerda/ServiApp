@@ -23,6 +23,8 @@ public class InitActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
         myFirebaseRef = new Firebase("https://serviapp.firebaseio.com/");
 
+
+
         TimerTask task = new TimerTask() {
             @Override
             public void run() {

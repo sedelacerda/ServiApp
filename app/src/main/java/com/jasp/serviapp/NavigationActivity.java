@@ -1,5 +1,6 @@
 package com.jasp.serviapp;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, HelpFragment.OnFragmentInteractionListener,
@@ -25,11 +27,21 @@ AddServiceFragment.OnFragmentInteractionListener{
 
     FrameLayout frame;
     Fragment currentView = null;
+    TextView nav_username;
+
+    //region Datos del usuario
+    String firstName = "";
+    String lastName = "";
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_navigation);
+
+        firstName = LoginActivity.user.getFirstName();
+        lastName = LoginActivity.user.getLastName();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -102,6 +114,9 @@ AddServiceFragment.OnFragmentInteractionListener{
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.navigation, menu);
+
+        nav_username = (TextView) findViewById(R.id.nav_username);
+        nav_username.setText(firstName + " " + lastName);
         return true;
     }
 

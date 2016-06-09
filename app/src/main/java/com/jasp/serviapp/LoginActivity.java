@@ -3,6 +3,7 @@ package com.jasp.serviapp;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
@@ -34,12 +35,17 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -48,8 +54,14 @@ import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.firebase.client.AuthData;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 
 
 import org.json.JSONException;
@@ -79,16 +91,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private UserLoginTask mAuthTask = null;
 
-    // UI references.
+    //region UI references.
     private TextInputLayout firstNameView;
     private TextInputLayout lastNameView;
+    private TextInputLayout birthDateView;
     private TextInputLayout mobilePhoneView;
     private TextInputLayout workPhoneView;
     private TextInputLayout emailView;
     private TextInputLayout passwordView;
+    private Spinner genderSpinner;
 
     private AutoCompleteTextView firstNameText;
     private AutoCompleteTextView lastNameText;
+    private AutoCompleteTextView birthDateText;
     private AutoCompleteTextView mobilePhoneText;
     private AutoCompleteTextView workPhoneText;
     private AutoCompleteTextView emailText;
@@ -101,6 +116,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private View mProgressView;
     private View mLoginFormView;
+    //endregion
 
     /* The callback manager for Facebook */
     private CallbackManager mFacebookCallbackManager;
@@ -108,6 +124,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private AccessTokenTracker mFacebookAccessTokenTracker;
 
     boolean signInMode = false;
+
+    public static User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +141,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //region Referenciamos los objetos de la UI
         firstNameView = (TextInputLayout) findViewById(R.id.first_name_view);
         lastNameView = (TextInputLayout) findViewById(R.id.last_name_view);
+        birthDateView = (TextInputLayout) findViewById(R.id.birth_date_view);
         mobilePhoneView = (TextInputLayout) findViewById(R.id.mobile_phone_view);
         workPhoneView = (TextInputLayout) findViewById(R.id.work_phone_view);
         emailView = (TextInputLayout) findViewById(R.id.email_view);
@@ -130,6 +149,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         firstNameText = (AutoCompleteTextView) findViewById(R.id.first_name);
         lastNameText = (AutoCompleteTextView) findViewById(R.id.last_name);
+        birthDateText = (AutoCompleteTextView) findViewById(R.id.birth_date);
         mobilePhoneText = (AutoCompleteTextView) findViewById(R.id.mobile_phone);
         workPhoneText = (AutoCompleteTextView) findViewById(R.id.work_phone);
         emailText = (AutoCompleteTextView) findViewById(R.id.email);
@@ -142,9 +162,31 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        //iniciamos el spinner
+        ArrayList<String> genders = new ArrayList<String>();
+        genders.add(getString(R.string.prompt_gender_male));
+        genders.add(getString(R.string.prompt_gender_female));
+        genderSpinner = (Spinner) findViewById(R.id.gender_spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, genders);
+        genderSpinner.setAdapter(adapter);
+
         //endregion
 
         populateAutoComplete();
+
+        birthDateText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    DateDialog dialog = new DateDialog(v);
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    dialog.show(ft, "Date Picker");
+                }
+            }
+        });
 
         passwordText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -167,7 +209,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         signUpButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setSignUpLayout();
+                if(signInMode){
+                    setSignUpLayout();
+                }
+                else{
+                    registerUser();
+                }
             }
         });
 
@@ -180,7 +227,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         fbLogin.registerCallback(mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
+            public void onSuccess(final LoginResult loginResult) {
 
                 //region Extraemos datos del usuario de Facebook
                 GraphRequest request = GraphRequest.newMeRequest(
@@ -190,24 +237,100 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             public void onCompleted(JSONObject object, GraphResponse response) {
                                 Log.v("LoginActivity", response.toString());
 
+                                String id = null;
+                                String firstName = null;
+                                String lastName = null;
+                                String email = null;
+                                String gender = null;
+                                String birthday = null;
+
+                                //region Recibimos los datos de Facebook
                                 try {
-                                    String id = object.getString("id");
-                                    String firstName = object.getString("first_name");
-                                    String lastName = object.getString("last_name");
-                                    String email = object.getString("email");
-                                    String gender = object.getString("gender");
-                                    String birthday = object.getString("birthday"); // 01/31/1980 format
-                                    System.out.println("###################################################################### " + id);
-                                    System.out.println("###################################################################### " + firstName);
-                                    System.out.println("###################################################################### " + lastName);
-                                    System.out.println("###################################################################### " + email);
-                                    System.out.println("###################################################################### " + gender);
-                                    System.out.println("###################################################################### " + birthday);
+                                    id = object.getString("id");
+                                    firstName = object.getString("first_name");
+                                    lastName = object.getString("last_name");
+                                    email = object.getString("email");
+                                    gender = object.getString("gender");
+                                    birthday = object.getString("birthday"); // 01/31/1980 format
+                                    //Cambiamos el formato de la fecha
+                                    if(0 < birthday.length()){
+                                        try{
+                                            String[] comp = birthday.split("/");
+                                            birthday = comp[1] + "/" + comp[0] + "/" + comp[2];
+                                        }catch (IndexOutOfBoundsException e){ }
+                                    }
+
+                                    loginUser(firstName, lastName);
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
+
+                                final String mid = id;
+                                final String mfirstName = firstName;
+                                final String mlastName = lastName;
+                                final String memail = email;
+                                final String mgender = gender;
+                                final String mbirthday = birthday;
+
+                                //endregion
+
+                                InitActivity.myFirebaseRef.child("users").addChildEventListener(new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                        //region Si el FacebookID ya esta registrado, entonces iniciamos sesion
+                                        if(dataSnapshot.child("facebookID").exists() && mid != null){
+                                            if(dataSnapshot.child("facebookID").getValue().toString().equals(mid)){
+                                                user = dataSnapshot.getValue(User.class);
+                                                onFacebookAccessTokenChange(loginResult.getAccessToken());
+                                                goToNavigationActivity();
+                                            }
+                                        }
+                                        //endregion
+
+                                        //region Si el FacebookID no esta registrado, entonces se debe iniciar sesion con telefono/contraseña
+                                        else {
+                                            //Rellenamos el formulario de registro y enviamos a la pantalla de login
+                                            firstNameText.setText(mfirstName);
+                                            lastNameText.setText(mlastName);
+                                            birthDateText.setText(mbirthday);
+                                            emailText.setText(memail);
+                                            ArrayAdapter<String> adapter = (ArrayAdapter) genderSpinner.getAdapter();
+                                            if(mgender.equalsIgnoreCase("male"))
+                                                genderSpinner.setSelection(adapter.getPosition(getString(R.string.prompt_gender_male)));
+                                            else
+                                                genderSpinner.setSelection(adapter.getPosition(getString(R.string.prompt_gender_female)));
+                                            LoginManager.getInstance().logOut();
+                                            setSignInLayout();
+
+                                        }
+                                        //endregion
+
+                                    }
+
+                                    @Override
+                                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(FirebaseError firebaseError) {
+
+                                    }
+                                });
                             }
-                        });
+                        }
+                );
                 Bundle parameters = new Bundle();
                 parameters.putString("fields", "id,first_name,last_name,email,gender,birthday");
                 request.setParameters(parameters);
@@ -225,7 +348,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Log.v("LoginActivity", error.getCause().toString());
             }
         });
-        //endregion4
+
+
+        //endregion
 
         final LinearLayout layoutView = (LinearLayout) findViewById(R.id.login_main_layout);
 
@@ -259,6 +384,26 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         getLoaderManager().initLoader(0, null, this);
+    }
+
+    private void onFacebookAccessTokenChange(AccessToken token){
+        if(token != null){
+            InitActivity.myFirebaseRef.authWithOAuthToken("facebook", token.getToken(), new Firebase.AuthResultHandler() {
+
+                @Override
+                public void onAuthenticated(AuthData authData) {
+                    //Facebook user is now authenticated with the Firebase app
+                }
+
+                @Override
+                public void onAuthenticationError(FirebaseError firebaseError) {
+                    //hubo un error
+                }
+            });
+        }
+        else {
+            InitActivity.myFirebaseRef.unauth();
+        }
     }
 
     private boolean mayRequestContacts() {
@@ -512,13 +657,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    //region Estos 2 metodos son para modificar y animar la UI
+
+    /*El metodo setSignUpLayout traslada los objetos de la UI para que queden
+    solo los elementos necesarios para registrar un usuario
+     */
     private void setSignUpLayout(){
         if(signInMode){
             Display display = getWindowManager().getDefaultDisplay();
             Point size = new Point();
             display.getSize(size);
             int screenWidth = size.x;
-            int screenHeight = size.y;
 
             float translationPhoneY = 0;
             float translationY = 0;
@@ -529,30 +678,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             long durationY = 500;
             long durationX = 500;
 
-            firstNameView.animate().translationX(translationX);
-            lastNameView.animate().translationX(translationX);
-            mobilePhoneView.animate().translationY(translationPhoneY);
-            workPhoneView.animate().translationX(translationX);
-            emailView.animate().translationX(translationX);
-            passwordView.animate().translationY(translationY);
+            firstNameView.animate().translationX(translationX).setDuration(durationX);
+            lastNameView.animate().translationX(translationX).setDuration(durationX);
+            birthDateView.animate().translationX(translationX).setDuration(durationX);
+            genderSpinner.animate().translationX(translationX).setDuration(durationX);
+            mobilePhoneView.animate().translationY(translationPhoneY).setDuration(durationY);
+            workPhoneView.animate().translationX(translationX).setDuration(durationX);
+            emailView.animate().translationX(translationX).setDuration(durationX);
+            passwordView.animate().translationY(translationY).setDuration(durationY);
 
-            signInButton.animate().translationX(translationButtonsX);
-            signUpButton.animate().translationY(translationButtonsY);
-            separatorView.animate().translationX(translationButtonsX);
-            fbLogin.animate().translationX(translationButtonsX);
+            signInButton.animate().translationX(-translationButtonsX).setDuration(durationX);
+            signUpButton.animate().translationY(translationButtonsY).setDuration(durationY);
+            separatorView.animate().translationX(-translationButtonsX).setDuration(durationX);
+            fbLogin.animate().translationX(-translationButtonsX).setDuration(durationX);
 
             signInMode = false;
             this.setTitle(R.string.title_activity_signup);
         }
     }
 
+    /*El metodo setSignInLayout traslada los objetos de la UI para que queden
+    solo los elementos necesarios para que un usuario pueda iniciar sesión
+     */
     private void setSignInLayout(){
-        if(!signInMode && mobilePhoneView.getY() != firstNameView.getY()){
+        if(!signInMode && firstNameView.getY() != mobilePhoneView.getY()){
             Display display = getWindowManager().getDefaultDisplay();
             Point size = new Point();
             display.getSize(size);
             int screenWidth = size.x;
-            int screenHeight = size.y;
 
             float translationPhoneY = firstNameView.getY() - mobilePhoneView.getY();
             float translationY = lastNameView.getY() - passwordView.getY();
@@ -560,12 +713,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             long durationY = 500;
             long durationX = 500;
 
-            firstNameView.animate().translationX(translationX);
-            lastNameView.animate().translationX(translationX);
-            mobilePhoneView.animate().translationY(translationPhoneY);
-            workPhoneView.animate().translationX(translationX);
-            emailView.animate().translationX(translationX);
-            passwordView.animate().translationY(translationY);
+            firstNameView.animate().translationX(translationX).setDuration(durationX);
+            lastNameView.animate().translationX(translationX).setDuration(durationX);
+            birthDateView.animate().translationX(translationX).setDuration(durationX);
+            genderSpinner.animate().translationX(translationX).setDuration(durationX);
+            mobilePhoneView.animate().translationY(translationPhoneY).setDuration(durationY);
+            workPhoneView.animate().translationX(translationX).setDuration(durationX);
+            emailView.animate().translationX(translationX).setDuration(durationX);
+            passwordView.animate().translationY(translationY).setDuration(durationY);
 
             signInButton.animate().translationX(0).translationY(translationY).setDuration(durationX);
             signUpButton.animate().translationY(translationY).setDuration(durationY);
@@ -576,11 +731,66 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             this.setTitle(R.string.title_activity_login);
         }
     }
+    //endregion
 
     @Override
     public void onBackPressed() {
         if(!signInMode)
             setSignInLayout();
     }
+
+    private void goToNavigationActivity(){
+        startActivity(new Intent(LoginActivity.this, NavigationActivity.class));
+    }
+
+    private void loginUser(String firstName, String lastName){
+
+    }
+
+    private void registerUser(){
+
+        final String firstName = firstNameText.getText().toString();
+        final String lastName = lastNameText.getText().toString();
+        final String birthDate = birthDateText.getText().toString();
+        final String mobilePhone = mobilePhoneText.getText().toString();
+        final String workPhone = workPhoneText.getText().toString();
+        final String email = emailText.getText().toString();
+        final String password = passwordText.getText().toString();
+
+        final String loginEmail = mobilePhone + "@serviapp.cl";
+
+        InitActivity.myFirebaseRef.createUser(loginEmail, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
+            @Override
+            public void onSuccess(Map<String, Object> result) {
+                System.out.println("Successfully created user account with uid: " + result.get("uid"));
+
+                User newUser = new User();
+                if(0 < firstName.length())
+                    newUser.setFirstName(firstName);
+                if(0 < lastName.length())
+                    newUser.setLastName(lastName);
+                if(0 < birthDate.length())
+                    newUser.setBirthDate(birthDate);
+                if(0 < mobilePhone.length())
+                    newUser.setMobilePhone(mobilePhone);
+                if(0 < workPhone.length())
+                    newUser.setWorkPhone(workPhone);
+                if(0 < email.length())
+                    newUser.setEmail(email);
+                if(0 < password.length())
+                    newUser.setPassword(password);
+
+                InitActivity.myFirebaseRef.child("users").child(newUser.getMobilePhone()).setValue(newUser);
+                Toast.makeText(LoginActivity.this, "Usuario creado!", Toast.LENGTH_SHORT).show();
+
+            }
+            @Override
+            public void onError(FirebaseError firebaseError) {
+                Toast.makeText(LoginActivity.this, "No se pudo crear el usuario", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
 }
 

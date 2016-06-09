@@ -16,6 +16,9 @@
     <!-- Strings related to login -->
     <string name="prompt_first_name">Nombre</string>
     <string name="prompt_last_name">Apellido</string>
+    <string name="prompt_birth_date">Fecha de nacimiento</string>
+    <string name="prompt_gender_male">Hombre</string>
+    <string name="prompt_gender_female">Mujer</string>
     <string name="prompt_mobile_phone">Teléfono móvil</string>
     <string name="prompt_work_phone">Teléfono de trabajo (opcional)</string>
     <string name="prompt_email">Email (opcional)</string>
