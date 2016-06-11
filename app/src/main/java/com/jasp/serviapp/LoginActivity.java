@@ -39,7 +39,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -62,6 +61,7 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 
 import org.json.JSONException;
@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     boolean signInMode = false;
 
-    public static User user;
+    public static User user = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,7 +229,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onSuccess(final LoginResult loginResult) {
 
-                //region Extraemos datos del usuario de Facebook
+                //region Extraemos datos del usuario de Facebook e iniciamos sesion si se puede
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {
@@ -259,9 +259,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                             birthday = comp[1] + "/" + comp[0] + "/" + comp[2];
                                         }catch (IndexOutOfBoundsException e){ }
                                     }
-
-                                    loginUser(firstName, lastName);
-
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -273,54 +270,89 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 final String mgender = gender;
                                 final String mbirthday = birthday;
 
+                                final boolean[] usersIsEmpty = new boolean[]{true};
                                 //endregion
 
-                                InitActivity.myFirebaseRef.child("users").addChildEventListener(new ChildEventListener() {
+                                InitActivity.myFirebaseRef.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
-                                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                        //region Si el FacebookID ya esta registrado, entonces iniciamos sesion
-                                        if(dataSnapshot.child("facebookID").exists() && mid != null){
-                                            if(dataSnapshot.child("facebookID").getValue().toString().equals(mid)){
-                                                user = dataSnapshot.getValue(User.class);
-                                                onFacebookAccessTokenChange(loginResult.getAccessToken());
-                                                goToNavigationActivity();
-                                            }
-                                        }
-                                        //endregion
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot.hasChildren())
+                                            usersIsEmpty[0] = false;
 
-                                        //region Si el FacebookID no esta registrado, entonces se debe iniciar sesion con telefono/contraseña
-                                        else {
-                                            //Rellenamos el formulario de registro y enviamos a la pantalla de login
+                                        if (usersIsEmpty[0]) {
+                                            System.out.println("Inside if.");
+                                            //region Si users no tiene elementos entonces rellenamos el formulario de registro y enviamos a la pantalla de login
                                             firstNameText.setText(mfirstName);
                                             lastNameText.setText(mlastName);
                                             birthDateText.setText(mbirthday);
                                             emailText.setText(memail);
                                             ArrayAdapter<String> adapter = (ArrayAdapter) genderSpinner.getAdapter();
-                                            if(mgender.equalsIgnoreCase("male"))
+                                            if (mgender.equalsIgnoreCase("male"))
                                                 genderSpinner.setSelection(adapter.getPosition(getString(R.string.prompt_gender_male)));
                                             else
                                                 genderSpinner.setSelection(adapter.getPosition(getString(R.string.prompt_gender_female)));
                                             LoginManager.getInstance().logOut();
-                                            setSignInLayout();
+                                            setSignUpLayout();
+                                            Toast.makeText(LoginActivity.this, "No se pudo iniciar sesion. " +
+                                                    "No existe ningún usuario.", Toast.LENGTH_LONG).show();
+                                            //endregion
+                                        } else {
+                                            System.out.println("Inside else.");
+                                            InitActivity.myFirebaseRef.child("users").addChildEventListener(new ChildEventListener() {
+                                                @Override
+                                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                                    //region Si el FacebookID ya esta registrado, entonces iniciamos sesion
+                                                    if (dataSnapshot.child("facebookID").exists() && mid != null) {
+                                                        if (dataSnapshot.child("facebookID").getValue().toString().equals(mid)) {
+                                                            user = dataSnapshot.getValue(User.class);
+                                                            onFacebookAccessTokenChange(loginResult.getAccessToken());
+                                                            goToNavigationActivity();
+                                                        }
+                                                    }
+                                                    //endregion
 
+                                                    //region Si el FacebookID no esta registrado, entonces se debe iniciar sesion con telefono/contraseña
+                                                    else {
+                                                        //Rellenamos el formulario de registro y enviamos a la pantalla de login
+                                                        firstNameText.setText(mfirstName);
+                                                        lastNameText.setText(mlastName);
+                                                        birthDateText.setText(mbirthday);
+                                                        emailText.setText(memail);
+                                                        ArrayAdapter<String> adapter = (ArrayAdapter) genderSpinner.getAdapter();
+                                                        if (mgender.equalsIgnoreCase("male"))
+                                                            genderSpinner.setSelection(adapter.getPosition(getString(R.string.prompt_gender_male)));
+                                                        else
+                                                            genderSpinner.setSelection(adapter.getPosition(getString(R.string.prompt_gender_female)));
+                                                        LoginManager.getInstance().logOut();
+                                                        setSignUpLayout();
+                                                        Toast.makeText(LoginActivity.this, "No se pudo iniciar sesion. " +
+                                                                "Su cuenta de Facebook no esta registrada", Toast.LENGTH_LONG).show();
+                                                    }
+                                                    //endregion
+
+                                                }
+
+                                                @Override
+                                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                                }
+
+                                                @Override
+                                                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                                                }
+
+                                                @Override
+                                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                                                }
+
+                                                @Override
+                                                public void onCancelled(FirebaseError firebaseError) {
+                                                }
+                                            });
                                         }
-                                        //endregion
 
-                                    }
-
-                                    @Override
-                                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                                    }
-
-                                    @Override
-                                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                                    }
-
-                                    @Override
-                                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                                        InitActivity.myFirebaseRef.removeEventListener(this);
+                                        System.out.println("Listener removed.");
                                     }
 
                                     @Override
@@ -444,7 +476,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     /**
      * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
+     * If there are form errors (invalid mobilePhone, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
@@ -453,11 +485,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Reset errors.
-        emailText.setError(null);
+        mobilePhoneText.setError(null);
         passwordText.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = emailText.getText().toString();
+        String mobilePhone = mobilePhoneText.getText().toString();
         String password = passwordText.getText().toString();
 
         boolean cancel = false;
@@ -470,13 +502,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             cancel = true;
         }
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            emailText.setError(getString(R.string.error_field_required));
-            focusView = emailText;
+        // Check for a valid mobile phone
+        if (TextUtils.isEmpty(mobilePhone)) {
+            mobilePhoneText.setError(getString(R.string.error_field_required));
+            focusView = mobilePhoneText;
             cancel = true;
-        } else if (!isEmailValid(email)) {
-            emailText.setError(getString(R.string.error_invalid_email));
+        } else if (!isMobilePhoneValid(mobilePhone)) {
+            mobilePhoneText.setError(getString(R.string.error_invalid_mobile_phone));
             focusView = emailText;
             cancel = true;
         }
@@ -489,14 +521,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(mobilePhone, password);
             mAuthTask.execute((Void) null);
         }
     }
 
-    private boolean isEmailValid(String email) {
+    private boolean isMobilePhoneValid(String mobilePhone) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        if(mobilePhone.length() == 12 && mobilePhone.substring(0, 4).equalsIgnoreCase("+569"))
+            return true;
+        else
+            return false;
     }
 
     private boolean isPasswordValid(String password) {
@@ -600,17 +635,53 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
+        private final String mMobilePhone;
+        private final String mLoginEmail;
         private final String mPassword;
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
+        UserLoginTask(String mobilePhone, String password) {
+            mMobilePhone = mobilePhone;
+            mLoginEmail = mobilePhone + "@serviapp.cl";
             mPassword = password;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
+
+            final boolean[] output = new boolean[]{false};
+            user.setMobilePhone(mMobilePhone);
+
+            InitActivity.myFirebaseRef.authWithPassword(mLoginEmail, mPassword, new Firebase.AuthResultHandler() {
+                @Override
+                public void onAuthenticated(AuthData authData) {
+
+                    InitActivity.myFirebaseRef.child("users").child(user.getMobilePhone()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            user.setFirstName(dataSnapshot.child("firstName").getValue().toString());
+                            user.setLastName(dataSnapshot.child("lastName").getValue().toString());
+                            user.setBirthDate(dataSnapshot.child("birthDate").getValue().toString());
+                            if(dataSnapshot.child("email").exists())
+                                user.setEmail(dataSnapshot.child("email").getValue().toString());
+                            if(dataSnapshot.child("workPhone").exists())
+                                user.setWorkPhone(dataSnapshot.child("workPhone").getValue().toString());
+
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
+                    output[0] = true;
+                }
+
+                @Override
+                public void onAuthenticationError(FirebaseError firebaseError) {
+                    Toast.makeText(LoginActivity.this, "No se pudo iniciar sesión", Toast.LENGTH_LONG).show();
+                }
+            });
 
             try {
                 // Simulate network access.
@@ -619,16 +690,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return true;
+            return output[0];
         }
 
         @Override
@@ -637,7 +699,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                finish();
+                goToNavigationActivity();
             } else {
                 passwordText.setError(getString(R.string.error_incorrect_password));
                 passwordText.requestFocus();
@@ -782,7 +844,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 InitActivity.myFirebaseRef.child("users").child(newUser.getMobilePhone()).setValue(newUser);
                 Toast.makeText(LoginActivity.this, "Usuario creado!", Toast.LENGTH_SHORT).show();
-
+                setSignInLayout();
             }
             @Override
             public void onError(FirebaseError firebaseError) {

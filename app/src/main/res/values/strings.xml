@@ -26,10 +26,12 @@
     <string name="action_sign_in">Iniciar sesión</string>
     <string name="action_sign_up">Registrarse</string>
     <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_mobile_phone">This mobile phone is invalid</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+    <string name="login_email_domain">/@serviapp.cl</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>

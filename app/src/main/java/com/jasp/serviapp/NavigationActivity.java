@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,10 @@ import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, HelpFragment.OnFragmentInteractionListener,
 AddServiceFragment.OnFragmentInteractionListener{
@@ -29,18 +34,10 @@ AddServiceFragment.OnFragmentInteractionListener{
     Fragment currentView = null;
     TextView nav_username;
 
-    //region Datos del usuario
-    String firstName = "";
-    String lastName = "";
-    //endregion
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_navigation);
-
-        firstName = LoginActivity.user.getFirstName();
-        lastName = LoginActivity.user.getLastName();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -116,7 +113,20 @@ AddServiceFragment.OnFragmentInteractionListener{
         getMenuInflater().inflate(R.menu.navigation, menu);
 
         nav_username = (TextView) findViewById(R.id.nav_username);
-        nav_username.setText(firstName + " " + lastName);
+
+        InitActivity.myFirebaseRef.child("users").child(LoginActivity.user.getMobilePhone()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                LoginActivity.user.setFirstName(dataSnapshot.child("firstName").getValue().toString());
+                LoginActivity.user.setLastName(dataSnapshot.child("lastName").getValue().toString());
+                nav_username.setText(LoginActivity.user.getFirstName() + " " + LoginActivity.user.getLastName());
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
         return true;
     }
 
