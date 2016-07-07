@@ -1,0 +1,50 @@
+{
+  "project_info": {
+    "project_number": "285263614194",
+    "firebase_url": "https://serviapp.firebaseio.com",
+    "project_id": "firebase-serviapp",
+    "storage_bucket": "firebase-serviapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285263614194:android:8716a5a7999a726b",
+        "android_client_info": {
+          "package_name": "com.jasp.serviapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "285263614194-b6ub5n4silnn6seod069pqjpepgeses8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jasp.serviapp",
+            "certificate_hash": "B52734D7FE492F89D691F64FABA33FE144941981"
+          }
+        },
+        {
+          "client_id": "285263614194-qbh7hn2daq2shfrj5lm8eh163n4v8vfr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdOiKeWscXqq4wJfkkbRwlRB47KyzfVrU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
