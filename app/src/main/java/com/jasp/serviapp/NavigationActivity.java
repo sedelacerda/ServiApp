@@ -27,7 +27,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 public class NavigationActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, HelpFragment.OnFragmentInteractionListener,
+        implements NavigationView.OnNavigationItemSelectedListener, HelpFragment.OnFragmentInteractionListener, UserProfileFragment.OnFragmentInteractionListener,
 AddServiceFragment.OnFragmentInteractionListener{
 
     FrameLayout frame;
@@ -156,7 +156,7 @@ AddServiceFragment.OnFragmentInteractionListener{
         } else if (id == R.id.nav_add_service) {
             setCurrentView(new AddServiceFragment());
         } else if (id == R.id.nav_share) {
-
+            setCurrentView(new UserProfileFragment());
         } else if (id == R.id.nav_send) {
 
         }

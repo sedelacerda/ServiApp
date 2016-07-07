@@ -8,7 +8,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_navigation">NavigationActivity</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">Iniciar sesión</string>
     <string name="title_activity_signup">Registrarse</string>
@@ -36,4 +36,10 @@
         completions."
     </string>
     <string name="facebook_app_id">951970431568898</string>
+
+
+    <!-- UserProfile -->
+
+    <string name="cerrar_sesion">Cerrar Sesion</string>
+
 </resources>
