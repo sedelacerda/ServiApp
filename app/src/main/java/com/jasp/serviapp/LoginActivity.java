@@ -79,9 +79,6 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -237,18 +234,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onSuccess(final LoginResult loginResult) {
 
-                AccessToken fbToken = loginResult.getAccessToken();
-
-                AuthCredential credential = FacebookAuthProvider.getCredential(fbToken.getToken());
-                mAuth.signInWithCredential(credential)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (!task.isSuccessful()) {
-                            //Auth failed
-                        }
-                    }
-                });
 
                 //region Extraemos datos del usuario de Facebook e iniciamos sesion si se puede
                 GraphRequest request = GraphRequest.newMeRequest(
@@ -301,7 +286,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                             usersIsEmpty[0] = false;
 
                                         if (usersIsEmpty[0]) {
-                                            System.out.println("Inside if.");
                                             //region Si users no tiene elementos entonces rellenamos el formulario de registro y enviamos a la pantalla de login
                                             firstNameText.setText(mfirstName);
                                             lastNameText.setText(mlastName);
@@ -318,7 +302,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                                     "No existe ningún usuario.", Toast.LENGTH_LONG).show();
                                             //endregion
                                         } else {
-                                            System.out.println("Inside else.");
                                             InitActivity.myFirebaseRef.child("users").addChildEventListener(new ChildEventListener() {
                                                 @Override
                                                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -326,7 +309,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                                     if (dataSnapshot.child("facebookID").exists() && mid != null) {
                                                         if (dataSnapshot.child("facebookID").getValue().toString().equals(mid)) {
                                                             user = dataSnapshot.getValue(User.class);
-                                                            onFacebookAccessTokenChange(loginResult.getAccessToken());
+
+                                                            AccessToken fbToken = loginResult.getAccessToken();
+
+                                                            AuthCredential credential = FacebookAuthProvider.getCredential(fbToken.getToken());
+                                                            InitActivity.mAuth.signInWithCredential(credential)
+                                                                    .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                                                            if (!task.isSuccessful()) {
+                                                                                //Auth failed
+                                                                            }
+                                                                        }
+                                                                    });
+
                                                             goToNavigationActivity();
                                                         }
                                                     }
@@ -419,26 +415,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
         );
 
-        /** Iniciamos el autenticador de Firebase */
-        mAuth = FirebaseAuth.getInstance();
-
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                } else {
-                    // User is signed out
-                }
-            }
-        };
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
@@ -450,9 +431,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     public void onStop() {
         super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
     }
 
     private void populateAutoComplete() {
@@ -682,7 +660,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             final boolean[] output = new boolean[]{false};
             user.setMobilePhone(mMobilePhone);
 
-            mAuth.signInWithEmailAndPassword(mLoginEmail, mPassword)
+            InitActivity.mAuth.signInWithEmailAndPassword(mLoginEmail, mPassword)
                     .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -691,24 +669,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                         Toast.LENGTH_SHORT).show();
                             }
                             else {
-                                InitActivity.myFirebaseRef.child("users").child(user.getMobilePhone()).addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        user.setFirstName(dataSnapshot.child("firstName").getValue().toString());
-                                        user.setLastName(dataSnapshot.child("lastName").getValue().toString());
-                                        user.setBirthDate(dataSnapshot.child("birthDate").getValue().toString());
-                                        if(dataSnapshot.child("email").exists())
-                                            user.setEmail(dataSnapshot.child("email").getValue().toString());
-                                        if(dataSnapshot.child("workPhone").exists())
-                                            user.setWorkPhone(dataSnapshot.child("workPhone").getValue().toString());
-
-                                    }
-
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-
-                                    }
-                                });
                                 output[0] = true;
                             }
                         }
@@ -852,7 +812,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         final String loginEmail = mobilePhone + "@serviapp.cl";
 
-        mAuth.createUserWithEmailAndPassword(loginEmail, password)
+        InitActivity.mAuth.createUserWithEmailAndPassword(loginEmail, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {

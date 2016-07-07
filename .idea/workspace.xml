@@ -40,40 +40,18 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="fatal" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="39cb7114-079c-418a-94e8-e451038b5b3f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_analytics_9_2_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_analytics_impl_9_2_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_auth_9_2_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_auth_common_9_2_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_auth_module_9_2_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_common_9_2_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_core_9_2_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_database_9_2_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_database_connection_9_2_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_iid_9_2_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_storage_9_2_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_storage_common_9_2_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_base_9_2_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_basement_9_2_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_tasks_9_2_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/google-services.json" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/firebase_client_android_2_5_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/firebase_client_jvm_2_5_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/jackson_annotations_2_2_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/jackson_core_2_2_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/jackson_databind_2_2_2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/tubesock_0_0_12.xml" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/facebook_android_sdk_4_12_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/facebook_android_sdk_4_13_2.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/InitActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/InitActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/LoginActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/LoginActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/NavigationActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/NavigationActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/menu/layout_navigation_drawer.xml" afterPath="$PROJECT_DIR$/app/src/main/res/menu/layout_navigation_drawer.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
     </list>
     <ignored path="ServiApp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -109,10 +87,12 @@
       <file leaf-file-name="InitActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/InitActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="8" column="53" selection-start-line="8" selection-start-column="53" selection-end-line="8" selection-end-column="53" />
+            <state relative-caret-position="161">
+              <caret line="66" column="24" selection-start-line="66" selection-start-column="24" selection-end-line="66" selection-end-column="24" />
               <folding>
-                <marker date="1467853417248" expanded="false" signature="665:736" ph="() → {" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#1363#2687#0" expanded="true" />
+                <element signature="e#2686#2687#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -121,35 +101,24 @@
       <file leaf-file-name="LoginActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/LoginActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="321" column="56" selection-start-line="321" selection-start-column="56" selection-end-line="321" selection-end-column="56" />
+            <state relative-caret-position="935">
+              <caret line="287" column="62" selection-start-line="287" selection-start-column="62" selection-end-line="287" selection-end-column="62" />
               <folding>
                 <element signature="docComment;class#LoginActivity#0" expanded="false" />
-                <element signature="e#4828#4906#0" expanded="false" />
-                <element signature="e#9066#9371#0" expanded="true" />
-                <element signature="e#9370#9371#0" expanded="true" />
-                <element signature="e#9615#18480#0" expanded="true" />
-                <element signature="e#10232#10272#0" expanded="false" />
-                <element signature="method#onChildAdded#0;class#14116:17953" expanded="false" />
-                <element signature="method#onChildChanged#0;class#14116:17953" expanded="false" />
-                <element signature="method#onChildRemoved#0;class#14116:17953" expanded="false" />
-                <element signature="method#onChildMoved#0;class#14116:17953" expanded="false" />
-                <element signature="method#onCancelled#0;class#14116:17953" expanded="false" />
-                <element signature="method#onCancelled#0;class#12023:18422" expanded="false" />
-                <element signature="e#18479#18480#0" expanded="true" />
-                <element signature="e#19865#20259#0" expanded="true" />
-                <element signature="e#20258#20259#0" expanded="true" />
-                <element signature="e#23825#23887#0" expanded="false" />
+                <element signature="e#4737#4815#0" expanded="false" />
+                <element signature="e#9542#9582#0" expanded="false" />
+                <element signature="method#onChildAdded#0;class#13268:18140" expanded="false" />
+                <element signature="method#onChildChanged#0;class#13268:18140" expanded="false" />
+                <element signature="method#onChildRemoved#0;class#13268:18140" expanded="false" />
+                <element signature="method#onChildMoved#0;class#13268:18140" expanded="false" />
+                <element signature="method#onCancelled#0;class#13268:18140" expanded="false" />
+                <element signature="method#onCancelled#0;class#11333:18609" expanded="false" />
+                <element signature="e#23338#23400#0" expanded="false" />
                 <element signature="method#isPasswordValid#0;class#LoginActivity#0" expanded="false" />
                 <element signature="docComment;method#showProgress#0;class#LoginActivity#0" expanded="false" />
-                <element signature="e#26116#26182#0" expanded="false" />
-                <element signature="e#27017#27080#0" expanded="false" />
+                <element signature="e#25629#25695#0" expanded="false" />
+                <element signature="e#26530#26593#0" expanded="false" />
                 <element signature="method#onLoadFinished#0;class#LoginActivity#0" expanded="false" />
-                <element signature="e#29267#31107#0" expanded="true" />
-                <element signature="e#31106#31107#0" expanded="true" />
-                <element signature="e#31614#31658#0" expanded="true" />
-                <element signature="e#37005#38411#0" expanded="true" />
-                <element signature="e#38410#38411#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -165,28 +134,38 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="layout_login.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_login.xml">
+      <file leaf-file-name="NavigationActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/NavigationActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="231">
+              <caret line="163" column="34" selection-start-line="163" selection-start-column="34" selection-end-line="163" selection-end-column="34" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="class#2139:3364" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="layout_navigation_drawer.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/layout_navigation_drawer.xml">
           <provider editor-type-id="android-designer2">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1518">
-              <caret line="69" column="16" selection-start-line="69" selection-start-column="16" selection-end-line="69" selection-end-column="16" />
+            <state relative-caret-position="360">
+              <caret line="17" column="50" selection-start-line="17" selection-start-column="50" selection-end-line="17" selection-end-column="50" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NavigationActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/NavigationActivity.java">
+      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="116" column="127" selection-start-line="116" selection-start-column="127" selection-end-line="116" selection-end-column="127" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="class#2093:3318" expanded="false" />
-              </folding>
+            <state relative-caret-position="132">
+              <caret line="6" column="44" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1728,7 +1707,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="C:\Users\Seba\Documents\GitHub\ServiApp" value="4400948305664" />
+        <entry key="C:\Users\Seba\Documents\GitHub\ServiApp" value="4400963075865" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -1993,13 +1972,14 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/User.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/layout_login.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/DateDialog.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" />
         <option value="$PROJECT_DIR$/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/LoginActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/NavigationActivity.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/InitActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/menu/layout_navigation_drawer.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/NavigationActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/LoginActivity.java" />
       </list>
     </option>
   </component>
@@ -2046,6 +2026,102 @@
               <option name="myItemId" value="ServiApp" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Gradle Scripts" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ServiApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ServiApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ServiApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="menu" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ServiApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ServiApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="serviapp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ServiApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -2065,6 +2141,7 @@
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
     <property name="device.picker.selection" value="EP7420814F" />
+    <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlPreviewForm.SHOW" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -2415,30 +2492,31 @@
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32983682" sideWeight="0.49785638" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32473624" sideWeight="0.4699248" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41148886" sideWeight="0.3426423" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41148886" sideWeight="0.6573577" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39976552" sideWeight="0.49785176" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32983682" sideWeight="0.49785638" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32473624" sideWeight="0.4677766" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24736226" sideWeight="0.6122449" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24736226" sideWeight="0.3877551" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942554" sideWeight="0.4785177" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32983682" sideWeight="0.49356914" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32983682" sideWeight="0.5128617" order="11" side_tool="true" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17991407" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39976552" sideWeight="0.49785176" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2447,7 +2525,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32983682" sideWeight="0.49785638" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -2474,7 +2551,9 @@
         <state relative-caret-position="0">
           <caret line="23" column="47" selection-start-line="23" selection-start-column="47" selection-end-line="23" selection-end-column="47" />
           <folding>
-            <marker date="1467853417248" expanded="false" signature="665:736" ph="() → {" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#1363#2687#0" expanded="true" />
+            <element signature="e#2686#2687#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2485,31 +2564,20 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="docComment;class#LoginActivity#0" expanded="false" />
-            <element signature="e#4828#4906#0" expanded="false" />
-            <element signature="e#9066#9371#0" expanded="true" />
-            <element signature="e#9370#9371#0" expanded="true" />
-            <element signature="e#9615#18480#0" expanded="true" />
-            <element signature="e#10232#10272#0" expanded="false" />
-            <element signature="method#onChildAdded#0;class#14116:17953" expanded="false" />
-            <element signature="method#onChildChanged#0;class#14116:17953" expanded="false" />
-            <element signature="method#onChildRemoved#0;class#14116:17953" expanded="false" />
-            <element signature="method#onChildMoved#0;class#14116:17953" expanded="false" />
-            <element signature="method#onCancelled#0;class#14116:17953" expanded="false" />
-            <element signature="method#onCancelled#0;class#12023:18422" expanded="false" />
-            <element signature="e#18479#18480#0" expanded="true" />
-            <element signature="e#19865#20259#0" expanded="true" />
-            <element signature="e#20258#20259#0" expanded="true" />
-            <element signature="e#23825#23887#0" expanded="false" />
+            <element signature="e#4737#4815#0" expanded="false" />
+            <element signature="e#9542#9582#0" expanded="false" />
+            <element signature="method#onChildAdded#0;class#13268:18140" expanded="false" />
+            <element signature="method#onChildChanged#0;class#13268:18140" expanded="false" />
+            <element signature="method#onChildRemoved#0;class#13268:18140" expanded="false" />
+            <element signature="method#onChildMoved#0;class#13268:18140" expanded="false" />
+            <element signature="method#onCancelled#0;class#13268:18140" expanded="false" />
+            <element signature="method#onCancelled#0;class#11333:18609" expanded="false" />
+            <element signature="e#23338#23400#0" expanded="false" />
             <element signature="method#isPasswordValid#0;class#LoginActivity#0" expanded="false" />
             <element signature="docComment;method#showProgress#0;class#LoginActivity#0" expanded="false" />
-            <element signature="e#26116#26182#0" expanded="false" />
-            <element signature="e#27017#27080#0" expanded="false" />
+            <element signature="e#25629#25695#0" expanded="false" />
+            <element signature="e#26530#26593#0" expanded="false" />
             <element signature="method#onLoadFinished#0;class#LoginActivity#0" expanded="false" />
-            <element signature="e#29267#31107#0" expanded="true" />
-            <element signature="e#31106#31107#0" expanded="true" />
-            <element signature="e#31614#31658#0" expanded="true" />
-            <element signature="e#37005#38411#0" expanded="true" />
-            <element signature="e#38410#38411#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2544,7 +2612,7 @@
           <caret line="42" column="52" selection-start-line="42" selection-start-column="52" selection-end-line="42" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="class#2093:3318" expanded="false" />
+            <element signature="class#2139:3364" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2562,7 +2630,9 @@
         <state relative-caret-position="0">
           <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
           <folding>
-            <marker date="1467853417248" expanded="false" signature="665:736" ph="() → {" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#1363#2687#0" expanded="true" />
+            <element signature="e#2686#2687#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2573,31 +2643,20 @@
           <caret line="621" column="42" selection-start-line="621" selection-start-column="42" selection-end-line="621" selection-end-column="42" />
           <folding>
             <element signature="docComment;class#LoginActivity#0" expanded="false" />
-            <element signature="e#4828#4906#0" expanded="false" />
-            <element signature="e#9066#9371#0" expanded="true" />
-            <element signature="e#9370#9371#0" expanded="true" />
-            <element signature="e#9615#18480#0" expanded="true" />
-            <element signature="e#10232#10272#0" expanded="false" />
-            <element signature="method#onChildAdded#0;class#14116:17953" expanded="false" />
-            <element signature="method#onChildChanged#0;class#14116:17953" expanded="false" />
-            <element signature="method#onChildRemoved#0;class#14116:17953" expanded="false" />
-            <element signature="method#onChildMoved#0;class#14116:17953" expanded="false" />
-            <element signature="method#onCancelled#0;class#14116:17953" expanded="false" />
-            <element signature="method#onCancelled#0;class#12023:18422" expanded="false" />
-            <element signature="e#18479#18480#0" expanded="true" />
-            <element signature="e#19865#20259#0" expanded="true" />
-            <element signature="e#20258#20259#0" expanded="true" />
-            <element signature="e#23825#23887#0" expanded="false" />
+            <element signature="e#4737#4815#0" expanded="false" />
+            <element signature="e#9542#9582#0" expanded="false" />
+            <element signature="method#onChildAdded#0;class#13268:18140" expanded="false" />
+            <element signature="method#onChildChanged#0;class#13268:18140" expanded="false" />
+            <element signature="method#onChildRemoved#0;class#13268:18140" expanded="false" />
+            <element signature="method#onChildMoved#0;class#13268:18140" expanded="false" />
+            <element signature="method#onCancelled#0;class#13268:18140" expanded="false" />
+            <element signature="method#onCancelled#0;class#11333:18609" expanded="false" />
+            <element signature="e#23338#23400#0" expanded="false" />
             <element signature="method#isPasswordValid#0;class#LoginActivity#0" expanded="false" />
             <element signature="docComment;method#showProgress#0;class#LoginActivity#0" expanded="false" />
-            <element signature="e#26116#26182#0" expanded="false" />
-            <element signature="e#27017#27080#0" expanded="false" />
+            <element signature="e#25629#25695#0" expanded="false" />
+            <element signature="e#26530#26593#0" expanded="false" />
             <element signature="method#onLoadFinished#0;class#LoginActivity#0" expanded="false" />
-            <element signature="e#29267#31107#0" expanded="true" />
-            <element signature="e#31106#31107#0" expanded="true" />
-            <element signature="e#31614#31658#0" expanded="true" />
-            <element signature="e#37005#38411#0" expanded="true" />
-            <element signature="e#38410#38411#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2624,7 +2683,7 @@
           <caret line="42" column="50" selection-start-line="42" selection-start-column="47" selection-end-line="42" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="class#2093:3318" expanded="false" />
+            <element signature="class#2139:3364" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2655,7 +2714,9 @@
         <state relative-caret-position="0">
           <caret line="23" column="48" selection-start-line="23" selection-start-column="48" selection-end-line="23" selection-end-column="48" />
           <folding>
-            <marker date="1467853417248" expanded="false" signature="665:736" ph="() → {" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#1363#2687#0" expanded="true" />
+            <element signature="e#2686#2687#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2666,31 +2727,20 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="docComment;class#LoginActivity#0" expanded="false" />
-            <element signature="e#4828#4906#0" expanded="false" />
-            <element signature="e#9066#9371#0" expanded="true" />
-            <element signature="e#9370#9371#0" expanded="true" />
-            <element signature="e#9615#18480#0" expanded="true" />
-            <element signature="e#10232#10272#0" expanded="false" />
-            <element signature="method#onChildAdded#0;class#14116:17953" expanded="false" />
-            <element signature="method#onChildChanged#0;class#14116:17953" expanded="false" />
-            <element signature="method#onChildRemoved#0;class#14116:17953" expanded="false" />
-            <element signature="method#onChildMoved#0;class#14116:17953" expanded="false" />
-            <element signature="method#onCancelled#0;class#14116:17953" expanded="false" />
-            <element signature="method#onCancelled#0;class#12023:18422" expanded="false" />
-            <element signature="e#18479#18480#0" expanded="true" />
-            <element signature="e#19865#20259#0" expanded="true" />
-            <element signature="e#20258#20259#0" expanded="true" />
-            <element signature="e#23825#23887#0" expanded="false" />
+            <element signature="e#4737#4815#0" expanded="false" />
+            <element signature="e#9542#9582#0" expanded="false" />
+            <element signature="method#onChildAdded#0;class#13268:18140" expanded="false" />
+            <element signature="method#onChildChanged#0;class#13268:18140" expanded="false" />
+            <element signature="method#onChildRemoved#0;class#13268:18140" expanded="false" />
+            <element signature="method#onChildMoved#0;class#13268:18140" expanded="false" />
+            <element signature="method#onCancelled#0;class#13268:18140" expanded="false" />
+            <element signature="method#onCancelled#0;class#11333:18609" expanded="false" />
+            <element signature="e#23338#23400#0" expanded="false" />
             <element signature="method#isPasswordValid#0;class#LoginActivity#0" expanded="false" />
             <element signature="docComment;method#showProgress#0;class#LoginActivity#0" expanded="false" />
-            <element signature="e#26116#26182#0" expanded="false" />
-            <element signature="e#27017#27080#0" expanded="false" />
+            <element signature="e#25629#25695#0" expanded="false" />
+            <element signature="e#26530#26593#0" expanded="false" />
             <element signature="method#onLoadFinished#0;class#LoginActivity#0" expanded="false" />
-            <element signature="e#29267#31107#0" expanded="true" />
-            <element signature="e#31106#31107#0" expanded="true" />
-            <element signature="e#31614#31658#0" expanded="true" />
-            <element signature="e#37005#38411#0" expanded="true" />
-            <element signature="e#38410#38411#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2709,7 +2759,7 @@
           <caret line="40" column="40" selection-start-line="40" selection-start-column="40" selection-end-line="40" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="class#2093:3318" expanded="false" />
+            <element signature="class#2139:3364" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2741,7 +2791,9 @@
         <state relative-caret-position="0">
           <caret line="9" column="15" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="15" />
           <folding>
-            <marker date="1467853417248" expanded="false" signature="665:736" ph="() → {" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#1363#2687#0" expanded="true" />
+            <element signature="e#2686#2687#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2752,31 +2804,20 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="docComment;class#LoginActivity#0" expanded="false" />
-            <element signature="e#4828#4906#0" expanded="false" />
-            <element signature="e#9066#9371#0" expanded="true" />
-            <element signature="e#9370#9371#0" expanded="true" />
-            <element signature="e#9615#18480#0" expanded="true" />
-            <element signature="e#10232#10272#0" expanded="false" />
-            <element signature="method#onChildAdded#0;class#14116:17953" expanded="false" />
-            <element signature="method#onChildChanged#0;class#14116:17953" expanded="false" />
-            <element signature="method#onChildRemoved#0;class#14116:17953" expanded="false" />
-            <element signature="method#onChildMoved#0;class#14116:17953" expanded="false" />
-            <element signature="method#onCancelled#0;class#14116:17953" expanded="false" />
-            <element signature="method#onCancelled#0;class#12023:18422" expanded="false" />
-            <element signature="e#18479#18480#0" expanded="true" />
-            <element signature="e#19865#20259#0" expanded="true" />
-            <element signature="e#20258#20259#0" expanded="true" />
-            <element signature="e#23825#23887#0" expanded="false" />
+            <element signature="e#4737#4815#0" expanded="false" />
+            <element signature="e#9542#9582#0" expanded="false" />
+            <element signature="method#onChildAdded#0;class#13268:18140" expanded="false" />
+            <element signature="method#onChildChanged#0;class#13268:18140" expanded="false" />
+            <element signature="method#onChildRemoved#0;class#13268:18140" expanded="false" />
+            <element signature="method#onChildMoved#0;class#13268:18140" expanded="false" />
+            <element signature="method#onCancelled#0;class#13268:18140" expanded="false" />
+            <element signature="method#onCancelled#0;class#11333:18609" expanded="false" />
+            <element signature="e#23338#23400#0" expanded="false" />
             <element signature="method#isPasswordValid#0;class#LoginActivity#0" expanded="false" />
             <element signature="docComment;method#showProgress#0;class#LoginActivity#0" expanded="false" />
-            <element signature="e#26116#26182#0" expanded="false" />
-            <element signature="e#27017#27080#0" expanded="false" />
+            <element signature="e#25629#25695#0" expanded="false" />
+            <element signature="e#26530#26593#0" expanded="false" />
             <element signature="method#onLoadFinished#0;class#LoginActivity#0" expanded="false" />
-            <element signature="e#29267#31107#0" expanded="true" />
-            <element signature="e#31106#31107#0" expanded="true" />
-            <element signature="e#31614#31658#0" expanded="true" />
-            <element signature="e#37005#38411#0" expanded="true" />
-            <element signature="e#38410#38411#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2820,13 +2861,6 @@
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="13" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/layout_navigation_drawer.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -2894,25 +2928,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="726">
-          <caret line="33" column="39" selection-start-line="33" selection-start-column="39" selection-end-line="33" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_login.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1518">
-          <caret line="69" column="16" selection-start-line="69" selection-start-column="16" selection-end-line="69" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
@@ -2929,60 +2944,6 @@
         <state relative-caret-position="770">
           <caret line="35" column="17" selection-start-line="35" selection-start-column="17" selection-end-line="35" selection-end-column="17" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/NavigationActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="116" column="127" selection-start-line="116" selection-start-column="127" selection-end-line="116" selection-end-column="127" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="class#2093:3318" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/LoginActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="321" column="56" selection-start-line="321" selection-start-column="56" selection-end-line="321" selection-end-column="56" />
-          <folding>
-            <element signature="docComment;class#LoginActivity#0" expanded="false" />
-            <element signature="e#4828#4906#0" expanded="false" />
-            <element signature="e#9066#9371#0" expanded="true" />
-            <element signature="e#9370#9371#0" expanded="true" />
-            <element signature="e#9615#18480#0" expanded="true" />
-            <element signature="e#10232#10272#0" expanded="false" />
-            <element signature="method#onChildAdded#0;class#14116:17953" expanded="false" />
-            <element signature="method#onChildChanged#0;class#14116:17953" expanded="false" />
-            <element signature="method#onChildRemoved#0;class#14116:17953" expanded="false" />
-            <element signature="method#onChildMoved#0;class#14116:17953" expanded="false" />
-            <element signature="method#onCancelled#0;class#14116:17953" expanded="false" />
-            <element signature="method#onCancelled#0;class#12023:18422" expanded="false" />
-            <element signature="e#18479#18480#0" expanded="true" />
-            <element signature="e#19865#20259#0" expanded="true" />
-            <element signature="e#20258#20259#0" expanded="true" />
-            <element signature="e#23825#23887#0" expanded="false" />
-            <element signature="method#isPasswordValid#0;class#LoginActivity#0" expanded="false" />
-            <element signature="docComment;method#showProgress#0;class#LoginActivity#0" expanded="false" />
-            <element signature="e#26116#26182#0" expanded="false" />
-            <element signature="e#27017#27080#0" expanded="false" />
-            <element signature="method#onLoadFinished#0;class#LoginActivity#0" expanded="false" />
-            <element signature="e#29267#31107#0" expanded="true" />
-            <element signature="e#31106#31107#0" expanded="true" />
-            <element signature="e#31614#31658#0" expanded="true" />
-            <element signature="e#37005#38411#0" expanded="true" />
-            <element signature="e#38410#38411#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3004,18 +2965,93 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+        <state relative-caret-position="264">
+          <caret line="35" column="47" selection-start-line="35" selection-start-column="47" selection-end-line="35" selection-end-column="47" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_login.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="69" column="16" selection-start-line="69" selection-start-column="16" selection-end-line="69" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="6" column="44" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/layout_navigation_drawer.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="17" column="50" selection-start-line="17" selection-start-column="50" selection-end-line="17" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/NavigationActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="163" column="34" selection-start-line="163" selection-start-column="34" selection-end-line="163" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="class#2139:3364" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/LoginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="935">
+          <caret line="287" column="62" selection-start-line="287" selection-start-column="62" selection-end-line="287" selection-end-column="62" />
+          <folding>
+            <element signature="docComment;class#LoginActivity#0" expanded="false" />
+            <element signature="e#4737#4815#0" expanded="false" />
+            <element signature="e#9542#9582#0" expanded="false" />
+            <element signature="method#onChildAdded#0;class#13268:18140" expanded="false" />
+            <element signature="method#onChildChanged#0;class#13268:18140" expanded="false" />
+            <element signature="method#onChildRemoved#0;class#13268:18140" expanded="false" />
+            <element signature="method#onChildMoved#0;class#13268:18140" expanded="false" />
+            <element signature="method#onCancelled#0;class#13268:18140" expanded="false" />
+            <element signature="method#onCancelled#0;class#11333:18609" expanded="false" />
+            <element signature="e#23338#23400#0" expanded="false" />
+            <element signature="method#isPasswordValid#0;class#LoginActivity#0" expanded="false" />
+            <element signature="docComment;method#showProgress#0;class#LoginActivity#0" expanded="false" />
+            <element signature="e#25629#25695#0" expanded="false" />
+            <element signature="e#26530#26593#0" expanded="false" />
+            <element signature="method#onLoadFinished#0;class#LoginActivity#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jasp/serviapp/InitActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" column="53" selection-start-line="8" selection-start-column="53" selection-end-line="8" selection-end-column="53" />
+        <state relative-caret-position="161">
+          <caret line="66" column="24" selection-start-line="66" selection-start-column="24" selection-end-line="66" selection-end-column="24" />
           <folding>
-            <marker date="1467853417248" expanded="false" signature="665:736" ph="() → {" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#1363#2687#0" expanded="true" />
+            <element signature="e#2686#2687#0" expanded="true" />
           </folding>
         </state>
       </provider>
