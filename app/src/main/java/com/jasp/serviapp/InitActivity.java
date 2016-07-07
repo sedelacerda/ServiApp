@@ -1,29 +1,26 @@
 package com.jasp.serviapp;
 
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.firebase.client.Firebase;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class InitActivity extends AppCompatActivity {
 
-    public static Firebase myFirebaseRef;
+    public static DatabaseReference myFirebaseRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_init);
-        // Ver https://developer.zendesk.com/embeddables/docs/android-chat-sdk/sessionapi
 
-        //Iniciamos la libreria de Firebase
-        Firebase.setAndroidContext(this);
-        myFirebaseRef = new Firebase("https://serviapp.firebaseio.com/");
-
-
+        myFirebaseRef = FirebaseDatabase.getInstance().getReference();
 
         TimerTask task = new TimerTask() {
             @Override

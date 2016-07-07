@@ -56,12 +56,17 @@ import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.firebase.client.AuthData;
-import com.firebase.client.ChildEventListener;
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 
 import org.json.JSONException;
@@ -73,6 +78,9 @@ import static android.Manifest.permission.READ_CONTACTS;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -229,6 +237,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onSuccess(final LoginResult loginResult) {
 
+                AccessToken fbToken = loginResult.getAccessToken();
+
+                AuthCredential credential = FacebookAuthProvider.getCredential(fbToken.getToken());
+                mAuth.signInWithCredential(credential)
+                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (!task.isSuccessful()) {
+                            //Auth failed
+                        }
+                    }
+                });
+
                 //region Extraemos datos del usuario de Facebook e iniciamos sesion si se puede
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
@@ -346,7 +367,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                                 }
 
                                                 @Override
-                                                public void onCancelled(FirebaseError firebaseError) {
+                                                public void onCancelled(DatabaseError databaseError) {
                                                 }
                                             });
                                         }
@@ -356,7 +377,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                     }
 
                                     @Override
-                                    public void onCancelled(FirebaseError firebaseError) {
+                                    public void onCancelled(DatabaseError databaseError) {
 
                                     }
                                 });
@@ -397,17 +418,41 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     }
                 }
         );
+
+        /** Iniciamos el autenticador de Firebase */
+        mAuth = FirebaseAuth.getInstance();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                } else {
+                    // User is signed out
+                }
+            }
+        };
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
     protected void onResume(){
         super.onResume();
         setSignInLayout();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 
     private void populateAutoComplete() {
@@ -419,23 +464,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void onFacebookAccessTokenChange(AccessToken token){
-        if(token != null){
-            InitActivity.myFirebaseRef.authWithOAuthToken("facebook", token.getToken(), new Firebase.AuthResultHandler() {
 
-                @Override
-                public void onAuthenticated(AuthData authData) {
-                    //Facebook user is now authenticated with the Firebase app
-                }
-
-                @Override
-                public void onAuthenticationError(FirebaseError firebaseError) {
-                    //hubo un error
-                }
-            });
-        }
-        else {
-            InitActivity.myFirebaseRef.unauth();
-        }
     }
 
     private boolean mayRequestContacts() {
@@ -643,6 +672,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mMobilePhone = mobilePhone;
             mLoginEmail = mobilePhone + "@serviapp.cl";
             mPassword = password;
+
         }
 
         @Override
@@ -652,36 +682,37 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             final boolean[] output = new boolean[]{false};
             user.setMobilePhone(mMobilePhone);
 
-            InitActivity.myFirebaseRef.authWithPassword(mLoginEmail, mPassword, new Firebase.AuthResultHandler() {
-                @Override
-                public void onAuthenticated(AuthData authData) {
-
-                    InitActivity.myFirebaseRef.child("users").child(user.getMobilePhone()).addValueEventListener(new ValueEventListener() {
+            mAuth.signInWithEmailAndPassword(mLoginEmail, mPassword)
+                    .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            user.setFirstName(dataSnapshot.child("firstName").getValue().toString());
-                            user.setLastName(dataSnapshot.child("lastName").getValue().toString());
-                            user.setBirthDate(dataSnapshot.child("birthDate").getValue().toString());
-                            if(dataSnapshot.child("email").exists())
-                                user.setEmail(dataSnapshot.child("email").getValue().toString());
-                            if(dataSnapshot.child("workPhone").exists())
-                                user.setWorkPhone(dataSnapshot.child("workPhone").getValue().toString());
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(LoginActivity.this, "No se pudo iniciar sesión",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            else {
+                                InitActivity.myFirebaseRef.child("users").child(user.getMobilePhone()).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        user.setFirstName(dataSnapshot.child("firstName").getValue().toString());
+                                        user.setLastName(dataSnapshot.child("lastName").getValue().toString());
+                                        user.setBirthDate(dataSnapshot.child("birthDate").getValue().toString());
+                                        if(dataSnapshot.child("email").exists())
+                                            user.setEmail(dataSnapshot.child("email").getValue().toString());
+                                        if(dataSnapshot.child("workPhone").exists())
+                                            user.setWorkPhone(dataSnapshot.child("workPhone").getValue().toString());
 
-                        }
+                                    }
 
-                        @Override
-                        public void onCancelled(FirebaseError firebaseError) {
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
 
+                                    }
+                                });
+                                output[0] = true;
+                            }
                         }
                     });
-                    output[0] = true;
-                }
-
-                @Override
-                public void onAuthenticationError(FirebaseError firebaseError) {
-                    Toast.makeText(LoginActivity.this, "No se pudo iniciar sesión", Toast.LENGTH_LONG).show();
-                }
-            });
 
             try {
                 // Simulate network access.
@@ -821,37 +852,33 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         final String loginEmail = mobilePhone + "@serviapp.cl";
 
-        InitActivity.myFirebaseRef.createUser(loginEmail, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
-            @Override
-            public void onSuccess(Map<String, Object> result) {
-                System.out.println("Successfully created user account with uid: " + result.get("uid"));
+        mAuth.createUserWithEmailAndPassword(loginEmail, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        System.out.println("Successfully created user account with uid: " + task.getResult().getUser().getUid());
 
-                User newUser = new User();
-                if(0 < firstName.length())
-                    newUser.setFirstName(firstName);
-                if(0 < lastName.length())
-                    newUser.setLastName(lastName);
-                if(0 < birthDate.length())
-                    newUser.setBirthDate(birthDate);
-                if(0 < mobilePhone.length())
-                    newUser.setMobilePhone(mobilePhone);
-                if(0 < workPhone.length())
-                    newUser.setWorkPhone(workPhone);
-                if(0 < email.length())
-                    newUser.setEmail(email);
-                if(0 < password.length())
-                    newUser.setPassword(password);
+                        User newUser = new User();
+                        if(0 < firstName.length())
+                            newUser.setFirstName(firstName);
+                        if(0 < lastName.length())
+                            newUser.setLastName(lastName);
+                        if(0 < birthDate.length())
+                            newUser.setBirthDate(birthDate);
+                        if(0 < mobilePhone.length())
+                            newUser.setMobilePhone(mobilePhone);
+                        if(0 < workPhone.length())
+                            newUser.setWorkPhone(workPhone);
+                        if(0 < email.length())
+                            newUser.setEmail(email);
+                        if(0 < password.length())
+                            newUser.setPassword(password);
 
-                InitActivity.myFirebaseRef.child("users").child(newUser.getMobilePhone()).setValue(newUser);
-                Toast.makeText(LoginActivity.this, "Usuario creado!", Toast.LENGTH_SHORT).show();
-                setSignInLayout();
-            }
-            @Override
-            public void onError(FirebaseError firebaseError) {
-                Toast.makeText(LoginActivity.this, "No se pudo crear el usuario", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+                        InitActivity.myFirebaseRef.child("users").child(newUser.getMobilePhone()).setValue(newUser);
+                        Toast.makeText(LoginActivity.this, "Usuario creado!", Toast.LENGTH_SHORT).show();
+                        setSignInLayout();
+                    }
+                });
     }
 
 }
