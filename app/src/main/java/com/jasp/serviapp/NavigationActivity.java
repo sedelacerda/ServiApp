@@ -22,12 +22,13 @@ import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 public class NavigationActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, HelpFragment.OnFragmentInteractionListener, UserProfileFragment.OnFragmentInteractionListener,
+        implements NavigationView.OnNavigationItemSelectedListener, HelpFragment.OnFragmentInteractionListener,
 AddServiceFragment.OnFragmentInteractionListener{
 
     FrameLayout frame;
@@ -123,7 +124,7 @@ AddServiceFragment.OnFragmentInteractionListener{
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
@@ -156,9 +157,11 @@ AddServiceFragment.OnFragmentInteractionListener{
         } else if (id == R.id.nav_add_service) {
             setCurrentView(new AddServiceFragment());
         } else if (id == R.id.nav_share) {
-            setCurrentView(new UserProfileFragment());
+
         } else if (id == R.id.nav_send) {
 
+        } else if (id == R.id.nav_logout) {
+            FirebaseAuth.getInstance().signOut();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
