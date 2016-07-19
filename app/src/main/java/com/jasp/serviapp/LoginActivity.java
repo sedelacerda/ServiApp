@@ -234,7 +234,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onSuccess(final LoginResult loginResult) {
 
-
                 //region Extraemos datos del usuario de Facebook e iniciamos sesion si se puede
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
