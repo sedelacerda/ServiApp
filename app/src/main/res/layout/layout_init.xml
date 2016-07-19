@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
         android:src="@drawable/sandiapplogo_xhdpi"
-        android:layout_above="@+id/ver_perfil"
+        android:layout_above="@+id/textView"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="ServiApp"
-        android:id="@+id/ver_perfil"
+        android:id="@+id/textView"
         android:textColor="@color/textColorPrimaryDark"
         android:singleLine="true"
         android:textSize="25dp"
