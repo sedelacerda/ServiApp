@@ -1,0 +1,54 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jasp.serviapp.UserProfileFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:layout_width="189dp"
+            android:layout_height="199dp"
+            android:id="@+id/imageView2"
+            android:src="@drawable/user" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Nombre Usuario"
+            android:id="@+id/nombre_usuario"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Info Usuario"
+            android:id="@+id/textView5"
+            android:layout_gravity="center_horizontal" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cerrar-Sesion"
+            android:id="@+id/cerrar_sesion"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="130dp" />
+    </LinearLayout>
+
+</FrameLayout>

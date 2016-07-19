@@ -29,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class NavigationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, HelpFragment.OnFragmentInteractionListener,
-AddServiceFragment.OnFragmentInteractionListener{
+AddServiceFragment.OnFragmentInteractionListener, UserProfileFragment.OnFragmentInteractionListener{
 
     FrameLayout frame;
     Fragment currentView = null;
@@ -157,7 +157,7 @@ AddServiceFragment.OnFragmentInteractionListener{
         } else if (id == R.id.nav_add_service) {
             setCurrentView(new AddServiceFragment());
         } else if (id == R.id.nav_share) {
-
+            setCurrentView(new UserProfileFragment());
         } else if (id == R.id.nav_send) {
 
         } else if (id == R.id.nav_logout) {
