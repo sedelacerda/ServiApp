@@ -3,16 +3,33 @@ package com.jasp.serviapp;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.Profile;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+
+import static com.jasp.serviapp.InitActivity.mAuth;
 
 
 /**
@@ -34,6 +51,10 @@ public class UserProfileFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private NavigationActivity context;
+
+    /* Used to track user logging in/out off Facebook */
+    private AccessTokenTracker mFacebookAccessTokenTracker;
 
     public UserProfileFragment() {
         // Required empty public constructor
@@ -68,6 +89,7 @@ public class UserProfileFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        context = (NavigationActivity) getActivity();
 
     }
 
@@ -76,9 +98,27 @@ public class UserProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
 
+        // Initialize Facebook Login button
+        LoginButton loginButton = (LoginButton) view.findViewById(R.id.button_facebook_login);
+        loginButton.setReadPermissions("email", "public_profile");
+        loginButton.registerCallback(context.mFacebookCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                handleFacebookAccessToken(loginResult.getAccessToken());
+            }
 
-        return inflater.inflate(R.layout.fragment_user_profile, container, false);
+            @Override
+            public void onCancel() {
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+            }
+        });
+
+        return view;
 
     }
 
@@ -132,9 +172,6 @@ public class UserProfileFragment extends Fragment {
 
             }
         });
-
-
-
     }
 
 
@@ -152,5 +189,28 @@ public class UserProfileFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void handleFacebookAccessToken(AccessToken token) {
+
+        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+
+        mAuth.getCurrentUser().linkWithCredential(credential)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(getActivity(), "Facebook account already linked.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            String facebookID = Profile.getCurrentProfile().getId();
+                            InitActivity.myFirebaseRef.child("users").child(LoginActivity.user.getMobilePhone()).child("facebookID").setValue(facebookID);
+                            Toast.makeText(getActivity(), "Authenticated succesfully.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }
