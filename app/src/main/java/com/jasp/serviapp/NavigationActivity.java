@@ -22,6 +22,9 @@ import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,22 +38,18 @@ AddServiceFragment.OnFragmentInteractionListener, UserProfileFragment.OnFragment
     Fragment currentView = null;
     TextView nav_username;
 
+    /* The callback manager for Facebook */
+    public CallbackManager mFacebookCallbackManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        mFacebookCallbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.layout_navigation);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -156,12 +155,13 @@ AddServiceFragment.OnFragmentInteractionListener, UserProfileFragment.OnFragment
             setCurrentView(new HelpFragment());
         } else if (id == R.id.nav_add_service) {
             setCurrentView(new AddServiceFragment());
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_profile) {
             setCurrentView(new UserProfileFragment());
         } else if (id == R.id.nav_send) {
 
         } else if (id == R.id.nav_logout) {
             FirebaseAuth.getInstance().signOut();
+            LoginManager.getInstance().logOut();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -184,5 +184,15 @@ AddServiceFragment.OnFragmentInteractionListener, UserProfileFragment.OnFragment
     @Override
     public void onFragmentInteraction(Uri uri){
         //you can leave it empty
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void loadUserData(){
+
     }
 }

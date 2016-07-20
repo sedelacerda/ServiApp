@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -37,7 +38,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -297,8 +297,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                                 genderSpinner.setSelection(adapter.getPosition(getString(R.string.prompt_gender_female)));
                                             LoginManager.getInstance().logOut();
                                             setSignUpLayout();
-                                            Toast.makeText(LoginActivity.this, "No se pudo iniciar sesion. " +
-                                                    "No existe ningún usuario.", Toast.LENGTH_LONG).show();
+                                            Snackbar.make((LinearLayout) findViewById(R.id.login_main_layout), "No se pudo iniciar sesion. No existe ningún usuario.", Snackbar.LENGTH_LONG)
+                                                    .setAction("Action", null).show();
+
                                             //endregion
                                         } else {
                                             InitActivity.myFirebaseRef.child("users").addChildEventListener(new ChildEventListener() {
@@ -341,8 +342,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                                             genderSpinner.setSelection(adapter.getPosition(getString(R.string.prompt_gender_female)));
                                                         LoginManager.getInstance().logOut();
                                                         setSignUpLayout();
-                                                        Toast.makeText(LoginActivity.this, "No se pudo iniciar sesion. " +
-                                                                "Su cuenta de Facebook no esta registrada", Toast.LENGTH_LONG).show();
+
+                                                        Snackbar.make((LinearLayout) findViewById(R.id.login_main_layout), "No se pudo iniciar sesion. " +
+                                                                "Su cuenta de Facebook no esta registrada", Snackbar.LENGTH_LONG)
+                                                                .setAction("Action", null).show();
                                                     }
                                                     //endregion
 
@@ -664,8 +667,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (!task.isSuccessful()) {
-                                Toast.makeText(LoginActivity.this, "No se pudo iniciar sesión",
-                                        Toast.LENGTH_SHORT).show();
+                                Snackbar.make((LinearLayout) findViewById(R.id.login_main_layout), "No se pudo iniciar sesión.", Snackbar.LENGTH_LONG)
+                                        .setAction("Action", null).show();
                             }
                             else {
                                 output[0] = true;
@@ -815,7 +818,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        System.out.println("Successfully created user account with uid: " + task.getResult().getUser().getUid());
 
                         User newUser = new User();
                         if(0 < firstName.length())
@@ -834,8 +836,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             newUser.setPassword(password);
 
                         InitActivity.myFirebaseRef.child("users").child(newUser.getMobilePhone()).setValue(newUser);
-                        Toast.makeText(LoginActivity.this, "Usuario creado!", Toast.LENGTH_SHORT).show();
-                        setSignInLayout();
+                        Snackbar snackbar = Snackbar.make((LinearLayout) findViewById(R.id.login_main_layout), "Usuario creado satisfactoriamente"
+                                , Snackbar.LENGTH_LONG).setAction("Action", null);
+
+                        View sbView = snackbar.getView();
+                        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+                        textView.setTextColor(Color.GREEN);
+                        snackbar.show();
                     }
                 });
     }

@@ -42,13 +42,19 @@
 
         </LinearLayout>
 
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/button_facebook_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="130dp" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cerrar-Sesion"
             android:id="@+id/cerrar_sesion"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="130dp" />
+            android:layout_marginTop="10dp" />
     </LinearLayout>
 
 </FrameLayout>

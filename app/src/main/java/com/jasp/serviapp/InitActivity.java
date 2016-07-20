@@ -45,15 +45,18 @@ public class InitActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
+
                 if (user != null) {
                     String loginEmail = user.getEmail();
                     String phoneNumber = loginEmail.substring(0, loginEmail.indexOf('@'));
-                    //Toast.makeText(InitActivity.this, phoneNumber, Toast.LENGTH_LONG).show();
+                    Toast.makeText(InitActivity.this, phoneNumber + " ...!... " + loginEmail, Toast.LENGTH_LONG).show();
 
                     ValueEventListener userInfoListener = new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
+                            LoginActivity.user = new User();
                             LoginActivity.user = dataSnapshot.getValue(User.class);
+                            Toast.makeText(InitActivity.this, LoginActivity.user.getMobilePhone(), Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(InitActivity.this, NavigationActivity.class));
                         }
 
